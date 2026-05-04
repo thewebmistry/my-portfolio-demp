@@ -325,6 +325,17 @@
             </div>
         </div>
 
+        <!-- ===== BEAUTY SALON PROJECTS SECTION ===== -->
+        <div class="mb-16 stagger-item" style="animation-delay:0.2s">
+            <div class="flex items-center gap-4 mb-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-white"><i class="fas fa-star text-teal-300 mr-3"></i>Beauty Salon Projects</h2>
+                <div class="h-px flex-1 bg-gradient-to-r from-teal-500/50 to-transparent"></div>
+            </div>
+            <p class="text-gray-400 mb-8 max-w-3xl">A collection of modern, responsive beauty salon websites built with cutting‑edge technologies. Each project features clean design, smooth animations, and optimal performance.</p>
+            
+            <div id="beautyProjectsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7"></div>
+        </div>
+
         <!-- Footer -->
         <footer class="mt-16 pt-8 border-t border-teal-900/30 text-center text-gray-400 text-sm">
             <p>© 2026 Bablu Mistry · Full‑Stack Developer · Lohardaga, Jharkhand</p>
@@ -446,6 +457,19 @@
                 { id:8, title:"Real Estate Listings", category:["react","php"], image:"https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=400&fit=crop", tags:["React","PHP","Mapbox"], description:"Interactive map search, property filters, agent dashboard." }
             ];
 
+            // ---------- BEAUTY SALON PROJECTS ----------
+            const beautyProjects = [
+                { id: 1, title: "Beauty Salon 7", url: "https://beautysalon.clickmint.co.in/beauty7/", image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&h=400&fit=crop", tags: ["WordPress", "Beauty", "Responsive"] },
+                { id: 2, title: "Beauty Salon 1", url: "https://beautysalon.clickmint.co.in/beauty1/", image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&h=400&fit=crop", tags: ["WordPress", "Beauty", "Modern"] },
+                { id: 3, title: "Beauty Salon 2", url: "https://beautysalon.clickmint.co.in/beauty2/", image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&h=400&fit=crop", tags: ["WordPress", "Beauty", "Elegant"] },
+                { id: 4, title: "Beauty Deep 9", url: "https://beautysalon.clickmint.co.in/beauty%209%20deep/", image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&h=400&fit=crop", tags: ["WordPress", "Deep Care", "Luxury"] },
+                { id: 5, title: "Beauty Deep 3", url: "https://beautysalon.clickmint.co.in/beauty3%20deep/", image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&h=400&fit=crop", tags: ["WordPress", "Deep Care", "Premium"] },
+                { id: 6, title: "Beauty Deep 5", url: "https://beautysalon.clickmint.co.in/beauty5%20deep/", image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&h=400&fit=crop", tags: ["WordPress", "Deep Care", "Spa"] },
+                { id: 7, title: "Beauty Gem 8", url: "https://beautysalon.clickmint.co.in/beauty8%20gem/", image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&h=400&fit=crop", tags: ["WordPress", "Gem", "Luxury"] },
+                { id: 8, title: "Beauty 10", url: "https://beautysalon.clickmint.co.in/beauty10/", image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&h=400&fit=crop", tags: ["WordPress", "Beauty", "Modern"] },
+                { id: 9, title: "Beauty JS App", url: "https://beautyparlourjs.netlify.app/", image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&h=400&fit=crop", tags: ["JavaScript", "React", "SPA"] }
+            ];
+
             const grid = document.getElementById('projectsGrid');
             const noResults = document.getElementById('noResults');
             const filterBtns = document.querySelectorAll('.filter-btn');
@@ -485,6 +509,40 @@
                 modal.classList.remove('hidden');
                 document.body.style.overflow = 'hidden';
             }
+
+            // Render beauty salon projects
+            function renderBeautyProjects() {
+                const beautyGrid = document.getElementById('beautyProjectsGrid');
+                if (!beautyGrid) return;
+                beautyGrid.innerHTML = '';
+                beautyProjects.forEach((proj, idx) => {
+                    const card = document.createElement('div');
+                    card.className = 'glass-card rounded-2xl overflow-hidden cursor-pointer stagger-item';
+                    card.style.animationDelay = `${idx * 0.05}s`;
+                    card.innerHTML = `
+                        <div class="project-img-wrap h-52 relative">
+                            <img src="${proj.image}" alt="${proj.title}" class="w-full h-full object-cover">
+                            <div class="overlay-details absolute inset-0 flex items-center justify-center transition">
+                                <span class="bg-gradient-to-r from-teal-500 to-cyan-500 backdrop-blur-sm px-5 py-2.5 rounded-full text-white font-medium shadow-xl"><i class="fas fa-external-link-alt mr-2"></i>Live Preview</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-white">${proj.title}</h3>
+                            <div class="flex flex-wrap gap-2 mb-4">${proj.tags.map(t=>`<span class="skill-badge px-3 py-1.5 rounded-full text-xs">${t}</span>`).join('')}</div>
+                            <a href="${proj.url}" target="_blank" class="inline-flex items-center gap-2 text-teal-300 hover:text-teal-200 font-medium">
+                                <i class="fas fa-link"></i> Visit Project
+                            </a>
+                        </div>`;
+                    // Click on card opens project in new tab
+                    card.addEventListener('click', (e) => {
+                        if (!e.target.closest('a')) {
+                            window.open(proj.url, '_blank');
+                        }
+                    });
+                    beautyGrid.appendChild(card);
+                });
+            }
+
             closeModal.addEventListener('click', ()=>{
                 modal.classList.add('hidden');
                 document.body.style.overflow = '';
@@ -500,6 +558,7 @@
             });
             
             renderProjects();
+            renderBeautyProjects();
 
             // Stagger animation for existing elements (already have class)
         })();
